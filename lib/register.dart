@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:validator/validator.dart';
+// import 'package:validator/validator.dart';
 //import 'package:my_app/homeScreen.dart';
 
 class Register extends StatefulWidget {
@@ -7,9 +7,41 @@ class Register extends StatefulWidget {
   _Register createState() => new _Register();
 }
 class _Register extends State<Register> {
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final formKey = new GlobalKey<FormState>();
+
+  String _firstname;
+  String _lastname;
+  String _email;
+  String _password;
+  RegExp email = new RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+  RegExp password = new RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,50}');
+  
+  void _submit() {
+    final form = formKey.currentState;
+
+    if (form.validate()) {
+      form.save();
+
+      // Email & password matched our validation rules
+      // and are saved to _email and _password fields.
+      _performLogin();
+    }
+  }
+
+  void _performLogin() {
+    // This is just a demo, so no actual login here.
+    final snackbar = new SnackBar(
+      content: new Text('Name: $_firstname $_lastname, Email: $_email, password: $_password'),
+    );
+
+    scaffoldKey.currentState.showSnackBar(snackbar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold (
+        key: scaffoldKey,
         appBar: new AppBar(
           title: new Text(
             "Register",
@@ -21,58 +53,51 @@ class _Register extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 new Form(
+                  key: formKey,
                   child: new Column(
                     children: <Widget>[
                       new Padding(
-                        padding: const EdgeInsets.only(left: 30.0,top: 8.0,right: 30.0, bottom: 8.0 ),
+                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
                         child: new TextFormField(
                           decoration: new InputDecoration(labelText: "First Name"),
+                          onSaved: (val) => _firstname = val,
+                          keyboardType: TextInputType.text,
                         ),
                       ),
                       new Padding(
-                        padding: const EdgeInsets.only(left: 30.0,top: 8.0,right: 30.0, bottom: 8.0 ),
+                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
                         child: new TextFormField(
                           decoration: new InputDecoration(labelText: "Last Name"),
+                          onSaved: (val) => _lastname = val,
+                          keyboardType: TextInputType.text,
                         ),
                       ),
                       new Padding(
-                        padding: const EdgeInsets.only(left: 30.0,top: 8.0,right: 30.0, bottom: 8.0 ),
+                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
                         child: new TextFormField(
-                          decoration: new InputDecoration(labelText: "Date of Birth"),
+                        decoration: new InputDecoration(labelText: 'Your email'),
+                        validator: (val) =>
+                          !email.hasMatch(val)? 'Invalid email' : null,
+                        onSaved: (val) => _email = val,
+                        keyboardType: TextInputType.text,
                         ),
                       ),
                       new Padding(
-                        padding: const EdgeInsets.only(left: 30.0,top: 8.0,right: 30.0, bottom: 8.0 ),
+                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
                         child: new TextFormField(
-                          validator: (val) {
-                            return isEmail(val)
-                                ? "Invalid email"
-                                : null;
-                          },
-//                      builder: (val){
-//                        return new TextField(
-//                          onChanged: (val) {
-//                            return isEmail(val)
-//                                ? "Invalid email"
-//                                : null;
-//                          },
-                          decoration: new InputDecoration(labelText: "Email"),
-//                        );
-//                      },
-
-                        ),
-                      ),
-                      new Padding(
-                        padding: const EdgeInsets.only(left: 30.0,top: 8.0,right: 30.0, bottom: 8.0 ),
-                        child: new TextFormField(
-                          decoration: new InputDecoration(labelText: "Password"),
+                        decoration: new InputDecoration(labelText: 'Your password'),
+                        validator: (val) =>
+                          !password.hasMatch(val)? 'Password is weak' : null,
+                        onSaved: (val) => _password = val,
+                        obscureText: true,
+                        keyboardType: TextInputType.text,
                         ),
                       ),
                     ],
                   ),
                 ),
                 new RaisedButton(
-                  onPressed: null,
+                  onPressed: _submit,
                   child: new Text('REGISTER'),
                   color: Colors.deepPurple,
                   textColor: Colors.white,

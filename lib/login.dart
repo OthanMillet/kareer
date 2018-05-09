@@ -12,7 +12,9 @@ class _Login extends State<Login> {
 
   String _email;
   String _password;
-
+  RegExp email = new RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+  RegExp password = new RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,50}');
+  
   void _submit() {
     final form = formKey.currentState;
 
@@ -50,7 +52,8 @@ class _Login extends State<Login> {
           children: <Widget>[
             new Form(
               key: formKey,
-              child: new Column(
+              child: new ListView(
+                scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   new Center(
                     child: new Image.asset(
@@ -63,8 +66,9 @@ class _Login extends State<Login> {
                     child: new TextFormField(
                     decoration: new InputDecoration(labelText: 'Your email'),
                     validator: (val) =>
-                       !val.contains('@') ? 'Invalid email.' : null,
+                       !email.hasMatch(val)? 'Invalid email' : null,
                     onSaved: (val) => _email = val,
+                    keyboardType: TextInputType.text,
                     ),
                   ),
                   new Padding(
@@ -72,9 +76,10 @@ class _Login extends State<Login> {
                     child: new TextFormField(
                     decoration: new InputDecoration(labelText: 'Your password'),
                     validator: (val) =>
-                       val.length < 6 ? 'Password is weak.' : null,
+                       !password.hasMatch(val)? 'Password is weak' : null,
                     onSaved: (val) => _password = val,
                     obscureText: true,
+                    keyboardType: TextInputType.text,
                     ),
                   ),
                 ],
