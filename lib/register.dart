@@ -9,6 +9,7 @@ class Register extends StatefulWidget {
 class _Register extends State<Register> {
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
+  final _padding = const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 );
 
   String _firstname;
   String _lastname;
@@ -40,7 +41,7 @@ class _Register extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold (
+    return new Scaffold ( 
         key: scaffoldKey,
         appBar: new AppBar(
           title: new Text(
@@ -48,7 +49,7 @@ class _Register extends State<Register> {
             textAlign: TextAlign.center,
           ),
         ),
-        body: new Center(
+        body: new Scrollbar(
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -57,7 +58,7 @@ class _Register extends State<Register> {
                   child: new Column(
                     children: <Widget>[
                       new Padding(
-                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
+                        padding: _padding,
                         child: new TextFormField(
                           decoration: new InputDecoration(labelText: "First Name"),
                           onSaved: (val) => _firstname = val,
@@ -65,7 +66,7 @@ class _Register extends State<Register> {
                         ),
                       ),
                       new Padding(
-                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
+                        padding: _padding,
                         child: new TextFormField(
                           decoration: new InputDecoration(labelText: "Last Name"),
                           onSaved: (val) => _lastname = val,
@@ -73,7 +74,7 @@ class _Register extends State<Register> {
                         ),
                       ),
                       new Padding(
-                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
+                        padding: _padding,
                         child: new TextFormField(
                         decoration: new InputDecoration(labelText: 'Your email'),
                         validator: (val) =>
@@ -83,7 +84,7 @@ class _Register extends State<Register> {
                         ),
                       ),
                       new Padding(
-                        padding: const EdgeInsets.only(left: 40.0,top: 8.0,right: 40.0, bottom: 8.0 ),
+                        padding: _padding,
                         child: new TextFormField(
                         decoration: new InputDecoration(labelText: 'Your password'),
                         validator: (val) =>
