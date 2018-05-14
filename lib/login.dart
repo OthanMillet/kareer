@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:validator/validator.dart';
-//import 'package:my_app/homeScreen.dart';
+import 'package:my_app/account.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -24,16 +24,18 @@ class _Login extends State<Login> {
       // Email & password matched our validation rules
       // and are saved to _email and _password fields.
       _performLogin();
+      Navigator.push(context,new MaterialPageRoute(builder: (context) => new Account()));
     }
   }
 
   void _performLogin() {
     // This is just a demo, so no actual login here.
     final snackbar = new SnackBar(
-      content: new Text('Email: $_email, password: $_password'),
+      content: new Text('Success!'),
     );
 
     scaffoldKey.currentState.showSnackBar(snackbar);
+
   }
 
   @override
@@ -46,14 +48,13 @@ class _Login extends State<Login> {
             textAlign: TextAlign.center,
           ),
       ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: new ListView(
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Form(
               key: formKey,
-              child: new ListView(
-                scrollDirection: Axis.horizontal,
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Center(
                     child: new Image.asset(
@@ -82,18 +83,17 @@ class _Login extends State<Login> {
                     keyboardType: TextInputType.text,
                     ),
                   ),
+                  new RaisedButton(
+                    onPressed: _submit,
+                    child: new Text('LOGIN'),
+                    color: Colors.teal,
+                    textColor: Colors.white,
+                    splashColor: Colors.blueGrey,
+                  ),
                 ],
               ),
             ),
-            new RaisedButton(
-              onPressed: _submit,
-              child: new Text('LOGIN'),
-              color: Colors.teal,
-              textColor: Colors.white,
-              splashColor: Colors.blueGrey,
-            ),
           ],
-        )
       )
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:validator/validator.dart';
-//import 'package:my_app/homeScreen.dart';
+import 'package:my_app/account.dart';
+import 'package:my_app/welcome.dart';
+import 'package:my_app/data/dbserver.dart';
+// import 'package:my_app/data/restful_data.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -23,20 +25,25 @@ class _Register extends State<Register> {
 
     if (form.validate()) {
       form.save();
+      var data = {'firstname':_firstname, 'lastname':_lastname, 'email': _email, 'password': _password};
 
       // Email & password matched our validation rules
       // and are saved to _email and _password fields.
-      _performLogin();
+      _performRegister(data);
     }
   }
 
-  void _performLogin() {
+  void _performRegister(data) {
+    print(data);
+    // var jsonData = new Insert.fromJson(data);
+    // print(jsonData);
     // This is just a demo, so no actual login here.
     final snackbar = new SnackBar(
-      content: new Text('Name: $_firstname $_lastname, Email: $_email, password: $_password'),
+      content: new Text('Success!'),
     );
 
     scaffoldKey.currentState.showSnackBar(snackbar);
+    Navigator.push(context,new MaterialPageRoute(builder: (context) => new Welcome()));
   }
 
   @override
@@ -49,64 +56,70 @@ class _Register extends State<Register> {
             textAlign: TextAlign.center,
           ),
         ),
-        body: new Scrollbar(
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Form(
-                  key: formKey,
-                  child: new Column(
-                    children: <Widget>[
-                      new Padding(
-                        padding: _padding,
-                        child: new TextFormField(
-                          decoration: new InputDecoration(labelText: "First Name"),
-                          onSaved: (val) => _firstname = val,
-                          keyboardType: TextInputType.text,
-                        ),
-                      ),
-                      new Padding(
-                        padding: _padding,
-                        child: new TextFormField(
-                          decoration: new InputDecoration(labelText: "Last Name"),
-                          onSaved: (val) => _lastname = val,
-                          keyboardType: TextInputType.text,
-                        ),
-                      ),
-                      new Padding(
-                        padding: _padding,
-                        child: new TextFormField(
-                        decoration: new InputDecoration(labelText: 'Your email'),
-                        validator: (val) =>
-                          !email.hasMatch(val)? 'Invalid email' : null,
-                        onSaved: (val) => _email = val,
-                        keyboardType: TextInputType.text,
-                        ),
-                      ),
-                      new Padding(
-                        padding: _padding,
-                        child: new TextFormField(
-                        decoration: new InputDecoration(labelText: 'Your password'),
-                        validator: (val) =>
-                          !password.hasMatch(val)? 'Password is weak' : null,
-                        onSaved: (val) => _password = val,
-                        obscureText: true,
-                        keyboardType: TextInputType.text,
-                        ),
-                      ),
-                    ],
+        body: new ListView(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Form(
+              key: formKey,
+              child: new Column( 
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Center(
+                    child: new Image.asset(
+                        'images/icon.png',
+                        height: 100.0
+                    )
                   ),
-                ),
-                new RaisedButton(
-                  onPressed: _submit,
-                  child: new Text('REGISTER'),
-                  color: Colors.deepPurple,
-                  textColor: Colors.white,
-                  splashColor: Colors.blueGrey,
-                ),
-              ],
-            )
+                  new Padding(
+                    padding: _padding,
+                    child: new TextFormField(
+                      decoration: new InputDecoration(labelText: "First Name"),
+                      onSaved: (val) => _firstname = val,
+                      keyboardType: TextInputType.text,
+                    ),
+                  ),
+                  new Padding(
+                    padding: _padding,
+                    child: new TextFormField(
+                      decoration: new InputDecoration(labelText: "Last Name"),
+                      onSaved: (val) => _lastname = val,
+                      keyboardType: TextInputType.text,
+                    ),
+                  ),
+                  new Padding(
+                    padding: _padding,
+                    child: new TextFormField(
+                    decoration: new InputDecoration(labelText: 'Your email'),
+                    validator: (val) =>
+                      !email.hasMatch(val)? 'Invalid email' : null,
+                    onSaved: (val) => _email = val,
+                    keyboardType: TextInputType.text,
+                    ),
+                  ),
+                  new Padding(
+                    padding: _padding,
+                    child: new TextFormField(
+                    decoration: new InputDecoration(labelText: 'Your password'),
+                    validator: (val) =>
+                      !password.hasMatch(val)? 'Password is weak' : null,
+                    onSaved: (val) => _password = val,
+                    obscureText: true,
+                    keyboardType: TextInputType.text,
+                    ),
+                  ),
+                  new RaisedButton(
+                    onPressed: _submit,
+                    child: new Text('REGISTER'),
+                    color: Colors.deepPurple,
+                    textColor: Colors.white,
+                    splashColor: Colors.blueGrey,
+                  ),
+                ],
+              ),
+            ),
+          ],
         )
     );
   }
+
 }
