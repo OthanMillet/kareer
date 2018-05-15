@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:validator/validator.dart';
-import 'package:my_app/account.dart';
+import 'data/server.dart';
+import 'pages/account.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -20,16 +21,19 @@ class _Login extends State<Login> {
 
     if (form.validate()) {
       form.save();
-
+      var data = [_email,_password];
       // Email & password matched our validation rules
       // and are saved to _email and _password fields.
-      _performLogin();
-      Navigator.push(context,new MaterialPageRoute(builder: (context) => new Account()));
+      _performLogin(data);
+      // Navigator.push(context,new MaterialPageRoute(builder: (context) => new Account()));
     }
   }
 
-  void _performLogin() {
+  void _performLogin(data) {
     // This is just a demo, so no actual login here.
+    print(data);
+    var result = getData(data);
+    print(result);
     final snackbar = new SnackBar(
       content: new Text('Success!'),
     );

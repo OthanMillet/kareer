@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/account.dart';
-import 'package:my_app/welcome.dart';
-import 'package:my_app/data/dbserver.dart';
-// import 'package:my_app/data/restful_data.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -43,7 +39,6 @@ class _Register extends State<Register> {
     );
 
     scaffoldKey.currentState.showSnackBar(snackbar);
-    Navigator.push(context,new MaterialPageRoute(builder: (context) => new Welcome()));
   }
 
   @override
