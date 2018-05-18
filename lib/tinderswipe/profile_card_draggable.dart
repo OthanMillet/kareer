@@ -28,7 +28,7 @@ class ProfileCardDraggable extends StatelessWidget
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>
               [
-                new Text('Card number $cardNum', style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700)),
+                new Text('Job title $cardNum', style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700)),
                 new Padding(padding: new EdgeInsets.only(bottom: 8.0)),
                 new Text('A short description.', textAlign: TextAlign.start),
               ],

@@ -9,9 +9,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
   validator: ^0.0.7
-  sqflite: any
+  sqflite: ^0.8.9
   dio: ^0.0.12 
-  # path_provider: ^0.4.0
+  path_provider: ^0.4.0
 
 dev_dependencies:
   flutter_test:

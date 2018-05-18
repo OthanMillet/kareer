@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import '../data/sql.dart';
 import '../tinderswipe/cards_section_alignment.dart';
 import '../tinderswipe/cards_section_draggable.dart';
 
@@ -9,6 +13,8 @@ class Account extends StatefulWidget {
 
 class _Account extends State<Account> {
   bool showAlignmentCards = false;
+  final db = new DatabaseHelper();
+  
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -58,7 +64,7 @@ class _Account extends State<Account> {
         ),
         new Center(
             child: new Text(
-            'Jonathan Millet',
+            'Juan Dela Cruz',
             style: new TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -138,7 +144,7 @@ class _Account extends State<Account> {
             )
           ),
         ),
-       new Padding(
+        new Padding(
             padding: const EdgeInsets.only(left: 20.0,top: 5.0,right: 20.0, bottom: 5.0),
             child: new Text('Academic Information',
                 style: new TextStyle(
@@ -241,4 +247,5 @@ class _Account extends State<Account> {
       ),
     );
   }
+
 }

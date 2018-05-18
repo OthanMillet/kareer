@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'data/server.dart';
+import 'data/sql.dart';
 import 'pages/account.dart';
 
 
@@ -15,30 +19,39 @@ class _Login extends State<Login> {
   String _password;
   RegExp email = new RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   RegExp password = new RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,50}');
+
+
   
   void _submit() {
     final form = formKey.currentState;
 
     if (form.validate()) {
       form.save();
-      var data = [_email,_password];
+      var data = {'email':_email,'password':_password};
       // Email & password matched our validation rules
       // and are saved to _email and _password fields.
       _performLogin(data);
-      // Navigator.push(context,new MaterialPageRoute(builder: (context) => new Account()));
+      
     }
   }
 
-  void _performLogin(data) {
-    // This is just a demo, so no actual login here.
-    print(data);
-    var result = getData(data);
-    print(result);
-    final snackbar = new SnackBar(
-      content: new Text('Success!'),
-    );
+  Future _performLogin(data) async {
+    var result = await getData('do-logIn',data);
+    var res = json.decode(result);
+    if (res[0] == 'Active'){
+      // print(res[2]);
+      // var db = new DatabaseHelper();
+      // var query = await db.saveUser(res[2]);
+      // print(query);
 
-    scaffoldKey.currentState.showSnackBar(snackbar);
+      // var query = await db.deleteUser();
+      // print(query);
+      scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Success!')));
+      Navigator.push(context,new MaterialPageRoute(builder: (context) => new Account()));
+    }
+    else{
+      scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Failed!')));
+    }
 
   }
 

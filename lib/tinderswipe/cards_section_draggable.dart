@@ -116,7 +116,7 @@ class _CardsSectionState extends State<CardsSectionDraggable>
       (
         builder: (_, __, ___)
         {
-          return new Container(color: dragOverTarget ? Colors.red : Colors.transparent);
+          return new Container(color: dragOverTarget ? Colors.transparent : Colors.transparent);
         },
         onWillAccept: (_)
         {
