@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import '../data/server.dart';
 import '../data/sql.dart';
 import '../tinderswipe/cards_section_alignment.dart';
 import '../tinderswipe/cards_section_draggable.dart';
@@ -15,6 +16,11 @@ class _Account extends State<Account> {
   bool showAlignmentCards = false;
   final db = new DatabaseHelper();
   
+  Future getData() async{
+    var user = await db.getData('User');
+    var account = await getAccount('get-account',{'email':user[0]['email'],'id':user[0]['id'],'auth':""});
+    return json.decode(account.data)[0];
+  }
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -44,6 +50,7 @@ class _Account extends State<Account> {
     );
   }
   Widget _accountTab() {
+    getData();
     return new ListView(
       // mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[

@@ -39,13 +39,10 @@ class _Login extends State<Login> {
     var result = await getData('do-logIn',data);
     var res = json.decode(result);
     if (res[0] == 'Active'){
-      // print(res[2]);
       // var db = new DatabaseHelper();
       // var query = await db.saveUser(res[2]);
       // print(query);
 
-      // var query = await db.deleteUser();
-      // print(query);
       scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Success!')));
       Navigator.push(context,new MaterialPageRoute(builder: (context) => new Account()));
     }

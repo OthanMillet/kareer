@@ -36,14 +36,16 @@ class DatabaseHelper {
 //insertion
   Future<int> saveUser(result) async {
     var dbClient = await db;
-    var res = await dbClient.insert("User", result);
+    var res = await dbClient.insert("User",result);
     return res;
   }
   //select
-  Future<String> getData(tbl) async {
+  Future getData(tbl) async {
     var dbClient = await db;
     var res = await dbClient.rawQuery('SELECT * FROM $tbl');
-    return res[0].toString();
+    // print(res);
+    // print(res[0]);
+    return res;
   }
 
   // //deletion
